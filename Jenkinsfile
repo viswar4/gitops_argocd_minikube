@@ -93,8 +93,9 @@ pipeline{
                       git config --global user.email "raghav@gmail.com"
                       git add deployment.yaml
                       git commit -m "updated deployment file"
-                    """
-                    git push "https://github.com/viswar4/gitops_argocd_minikube.git" master
+                      git remote -v
+                      git push origin master
+                      """
                 }
             }
         }
