@@ -77,9 +77,24 @@ pipeline{
                     sh """
                      cat deployment.yaml
                      sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
-
-                    
+                     cat deployment.yaml
                     """
+                }
+            }
+        }
+
+        stage("Push the changed deployment file to git"){
+
+            steps{
+
+                script {
+                    sh """
+                      git config --global user.name "Raghav"
+                      git config --global user.email "raghav@gmail.com"
+                      git add deployment.yaml
+                      git commit -m "updated deployment file"
+                    """
+                    git push "https://github.com/viswar4/gitops_argocd_minikube.git" master
                 }
             }
         }
