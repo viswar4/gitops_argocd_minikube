@@ -49,12 +49,25 @@ pipeline{
 
                 script{
                     
-                    docker.withRegistry('',DOCKERHUB_CREDS){
+                    docker.withRegistry('', DOCKERHUB_CREDS){
                         docker_image.push("$BUILD_NUMBER")
+                        docker_image.push('latest')
+                    }
+                }
+                
+                }
+            }
+        stage("Delete docker images and logout"){
+            
+            steps{
+
+                script{
+                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker rmi ${IMAGE_NAME}:latest"
+                    sh "docker logout"
                     }
                 }
                 
                 }
             }
         }
-    }
