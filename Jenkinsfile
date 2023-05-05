@@ -93,11 +93,13 @@ pipeline{
                       git config --global user.email "raghav@gmail.com"
                       git add deployment.yaml
                       git commit -m "updated deployment file"
-                      git remote -v
-                      git push origin master
                       """
+                    withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                    sh "git push https://github.com/viswar4/gitops_argocd_minikube.git master"
+
                 }
             }
         }
             }
         }
+}
