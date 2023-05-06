@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-app-deploy
-        image: viswar4/gitops-argo-app:37
+        image: viswar4/gitops-argo-app:39
         resources:
           limits:
             memory: "128Mi"
