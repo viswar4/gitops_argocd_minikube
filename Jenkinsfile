@@ -69,37 +69,17 @@ pipeline{
                 }
                 
                 }
-        stage("Update K8's deployment file with Jenkins build number"){
- 
+        
+        stage("Trigger Jenkins Gitops_CD pipeline"){
+            
             steps{
 
                 script{
-                    sh """
-                     cat deployment.yaml
-                     sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
-                     cat deployment.yaml
-                    """
+                
+                sh "curl -k -v -X POST --user admin:1165a48cef4b1e302072c7144be19838ce -H 'cache-control:no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://172.23.59.250:8080/job/Gitops_CD/buildWithParameters?token=gitops-config'"
                 }
+        
             }
         }
-
-        stage("Push the changed deployment file to git"){
-
-            steps{
-
-                script {
-                    sh """
-                      git config --global user.name "Raghav"
-                      git config --global user.email "raghav@gmail.com"
-                      git add deployment.yaml
-                      git commit -m "updated deployment file"
-                      """
-                    withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                    sh "git push https://github.com/viswar4/gitops_argocd_minikube.git master"
-
-                }
-            }
-        }
-            }
-        }
-}
+    }
+    }
