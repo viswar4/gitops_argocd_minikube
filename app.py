@@ -30,7 +30,7 @@ def health():
 
 @app.route("/")
 def home():
-    return "Welcome to Jenkins advanced CICD pipeline with gitops"
+    return "Hi Ganesh. this is application code"
    
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int("5000"), debug=True)
